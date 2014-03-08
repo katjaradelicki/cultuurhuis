@@ -1,0 +1,11 @@
+ul.genreMenu{
+	list-style: none;
+}
+ul.genreMenu li{
+	display: inline;
+
+	}
+	
+div.titel{
+	display: inline;
+	}
