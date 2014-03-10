@@ -4,6 +4,10 @@ public class Uitvoerder {//uitbreidbaar
 	
 	private String naam;
 
+	public Uitvoerder(String naam){
+		this.naam=naam;
+	}
+	
 	public String getNaam() {
 		return naam;
 	}
