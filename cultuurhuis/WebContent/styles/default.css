@@ -1,3 +1,21 @@
+h1{
+	font-size: 4em;
+}
+h2{
+	font-size: 2em;
+}
+
+dl dt{
+	font-weight: bold;
+	font-size: 1.4em;
+}
+dl dd{
+	font-size: 1.4em;
+	
+}
+
+
+
 ul.genreMenu{
 	list-style: none;
 }
@@ -29,10 +47,10 @@ table.zebra tr:nth-child(odd)
   padding-bottom: 0.1em;
 padding-top: 0.1em;
 }
-	table.zebra tr.titelTabel
+	table.zebra tr.titelRij
 { 
-  /* de browser past deze opmaak toe op
-     oneven (odd) tr elememten die behoren tot een table
-     element met de class zebra */
-  background-color: #c6d1dd;
+ 
+  background-color: #efefef;
+  padding-bottom: 0.1em;
+padding-top: 0.1em;
 } 

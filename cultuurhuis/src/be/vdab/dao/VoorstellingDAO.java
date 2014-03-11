@@ -20,6 +20,7 @@ import be.vdab.util.Voorstelling;
 
 public class VoorstellingDAO extends AbstractDAO {
 	private static final String FIND_BY_GENRE="select VoorstellingsNr,Titel, Uitvoerders,Datum, Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from genres, voorstellingen where genres.GenreNr=voorstellingen.GenreNr and genres.naam= ? order by Datum";
+	private static final String FIND_BY_PK="select VoorstellingsNr, Titel, Uitvoerders,Datum,Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from voorstellingen,genres where genres.GenreNr=voorstellingen.GenreNr and VoorstellingsNr=?";
 	
 	public LinkedList<Voorstelling> findByGenre(String genreNaam){
 		try(Connection connection=getConnection();
@@ -31,7 +32,7 @@ public class VoorstellingDAO extends AbstractDAO {
 				ResultSet resultset=statement.executeQuery();){
 				LinkedList<Voorstelling> voorstellingen=new LinkedList<>();
 				while(resultset.next()){
-					Voorstelling voorstelling=resultSetRijNaarVoorstelling(resultset);
+					Voorstelling voorstelling=resultSetFindByGenreRijNaarVoorstelling(resultset);
 					voorstellingen.add(voorstelling);
 				}
 				return voorstellingen;
@@ -41,8 +42,23 @@ public class VoorstellingDAO extends AbstractDAO {
 		}
 	}
 	
+	public Voorstelling findByPK(int voorstellingsNr){
+		try(Connection connection=getConnection();
+				PreparedStatement statement=connection.prepareStatement(FIND_BY_PK);){
+			statement.setInt(1, voorstellingsNr);
+			try(ResultSet resultset=statement.executeQuery();){
+				resultset.next();
+				Voorstelling voorstelling=resultSetFindByGenreRijNaarVoorstelling(resultset);
+				return voorstelling;
+			}
+			
+		}catch(SQLException ex){
+			throw new DAOException("Kan voorstelling niet vinden met nummer "+voorstellingsNr,ex);
+		}
+	}
 	
-	private Voorstelling resultSetRijNaarVoorstelling(ResultSet resultset){
+	
+	private Voorstelling resultSetFindByGenreRijNaarVoorstelling(ResultSet resultset){
 		
 		try{
 		Genre genre=new Genre(resultset.getInt("genreNummer"),resultset.getString("genreNaam"));
@@ -53,14 +69,15 @@ public class VoorstellingDAO extends AbstractDAO {
 			Uitvoerder uitvoerder=new Uitvoerder(tokenizer.nextToken());
 			uitvoerders.add(uitvoerder);
 		}
-		//Calendar datum=new GregorianCalendar();
-		//datum.setTime(resultset.getDate("Datum"));
-		Voorstelling voorstelling=new Voorstelling(resultset.getInt("VoorstellingsNr"),resultset.getDate("Datum"),resultset.getInt("VrijePlaatsen"),resultset.getString("Titel"),resultset.getDouble("Prijs"),genre,uitvoerders);
+		
+		Voorstelling voorstelling=new Voorstelling(resultset.getInt("VoorstellingsNr"),resultset.getTimestamp("Datum"),resultset.getInt("VrijePlaatsen"),resultset.getString("Titel"),resultset.getDouble("Prijs"),genre,uitvoerders);
 		return voorstelling;
 		}catch(SQLException ex){
 			throw new DAOException("Kan voorstellingen niet ophalen uit de databank", ex);
 		}
 	}
+	
+
 	
 
 }

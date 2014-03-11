@@ -26,16 +26,15 @@ import be.vdab.util.Voorstelling;
 public class VoorstellingenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final GenreDAO genreDAO=new GenreDAO();
-	private static final VoorstellingDAO voorstellingDAO=new VoorstellingDAO();
-	private static final Set<Genre> genres=genreDAO.findAll();//of Strings insteken? minder op de context bewaren
+	private static final VoorstellingDAO voorstellingDAO=new VoorstellingDAO();//niet in doGet gestopt want dan wordt er bij elke thread/request een instantie aangemaakt en zo gebeurt het maar 1 keer. De requests delen deze DAO. 
+	private static final Set<Genre> genres=genreDAO.findAll();//wordt één keer opgehaald uit databank bij initialisatie van deze servlet. Initialisatie van de servlet gebeurt 1 keer bij opstarten van de applicatie of bij eerste request.
     private static final String VIEW="/WEB-INF/JSP/voorstellingen.jsp"  ;
     /**
      * @see HttpServlet#HttpServlet()
      */
     
     public VoorstellingenServlet() {
-        //findAll 1 maal doen bij initialisatie ipv elke keer bij een doGet (OK want verandert niet vaak)
-    	//in sessionContext steken of als private static final attribuut hier?
+        
     	
     }
 	/**
@@ -43,16 +42,10 @@ public class VoorstellingenServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String gekozenGenre=request.getParameter("genre");
-		System.out.println("gekozen genre: "+gekozenGenre);
 		request.setAttribute("genres", genres);
 		if(gekozenGenre!=null && !gekozenGenre.isEmpty()){
-			System.out.println("gekozen genre is niet null of leeg");
-			request.getServletContext().setAttribute("genre", gekozenGenre);
+			request.getSession().setAttribute("genre", gekozenGenre);
 			LinkedList<Voorstelling> voorstellingen=voorstellingDAO.findByGenre(gekozenGenre);//LinkedList gebruiken omdat de sortering behouden moet blijven
-			System.out.println("de voorstellingen: "+voorstellingen.get(0).getTitel() + "  "+voorstellingen.get(0).getDatum());
-			SimpleDateFormat sdf=new SimpleDateFormat("dd/mm/yy hh:mm");
-			String datum=sdf.format(voorstellingen.get(0).getDatum());
-			System.out.println("datum: "+datum);
 			request.setAttribute("voorstellingen", voorstellingen);
 		}
 		RequestDispatcher dispatcher=request.getRequestDispatcher(VIEW);

@@ -6,6 +6,11 @@ public class Reservering {
 	private Voorstelling voorstelling;
 	private int aantalPlaatsen;
 	private boolean isGelukt;
+	
+	public Reservering(Voorstelling voorstelling, int aantalPlaatsen){
+		this.voorstelling=voorstelling;
+		this.aantalPlaatsen=aantalPlaatsen;
+	}
 	public int getReserveringsNr() {
 		return reserveringsNr;
 	}
