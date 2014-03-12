@@ -36,6 +36,7 @@ public class ReserverenServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().setAttribute("pagina", "Reserveren");//of als attribuut van de custom tag?
 		int voorstellingsNummer=Integer.parseInt( request.getParameter("voorstelling"));
 		Voorstelling voorstelling=voorstellingDAO.findByPK(voorstellingsNummer);
 		request.setAttribute("voorstelling", voorstelling);

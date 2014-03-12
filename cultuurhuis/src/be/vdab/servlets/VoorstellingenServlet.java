@@ -41,6 +41,7 @@ public class VoorstellingenServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().setAttribute("pagina", "Voorstellingen");
 		String gekozenGenre=request.getParameter("genre");
 		request.setAttribute("genres", genres);
 		if(gekozenGenre!=null && !gekozenGenre.isEmpty()){

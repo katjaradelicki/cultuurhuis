@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    <%@taglib prefix="vdab" uri="http://vdab.be/tags" %>
     <c:set var="contextPath" value="${pageContext.servletContext.contextPath}" />
 <!DOCTYPE html >
 <html>
@@ -11,6 +12,7 @@
 </head>
 <body>
 <h1>Het Cultuurhuis: reserveren <img alt="reserveren.png" src="${contextPath}/images/reserveren.png"/> </h1>
+<vdab:menu/>
 <dl>
 <dd>
 Voorstelling:</dd>

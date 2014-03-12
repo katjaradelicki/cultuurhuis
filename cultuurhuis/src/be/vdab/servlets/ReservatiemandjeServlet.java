@@ -26,6 +26,7 @@ public class ReservatiemandjeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final VoorstellingDAO voorstellingDAO=new VoorstellingDAO();
 	private static final String VIEW="/WEB-INF/JSP/reservatiemandje.jsp";
+	private static final String REDIRECT_URL="/reservatiemandje";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -41,6 +42,7 @@ public class ReservatiemandjeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//reservatiemandje tonen. De voorstellingennummers omzetten naar voorstellingsobjecten en dat op de request zetten. 
 		//(kan daar meer op dan op een session? want op de session enkel nummers bijhouden. In de jsp ben je met alleen nummers niets)
+		request.getSession().setAttribute("pagina", "Reservatiemandje");
 		List<Reservering> gewensteReserveringen=new LinkedList<>();
 		@SuppressWarnings("unchecked")
 		Map<Long, Integer> reservatiemandje=(Map<Long,Integer>) request.getSession().getAttribute("reservatiemandje");
@@ -66,7 +68,14 @@ public class ReservatiemandjeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// aangevinkte reservaties verwijderen uit reservatiemandje
 		//en dan terug reservatiemandje laten zien
-		//request parameters ophalen van aangvinkte reserveringen (worden die in url erbij gezet->herlezen)
+		//request parameters ophalen van aangvinkte reserveringen 
+		String[] teVerwijderenVoorstellingen= request.getParameterValues("verwijderenCheckbox");
+		Map<Long, Integer> reservatiemandje=(Map<Long,Integer>) request.getSession().getAttribute("reservatiemandje");
+		for(String voorstellingsNr:teVerwijderenVoorstellingen){
+			reservatiemandje.remove(Long.parseLong(voorstellingsNr));
+		}
+		request.getSession().setAttribute("reservatiemandje", reservatiemandje);
+		response.sendRedirect(response.encodeURL(request.getContextPath()+REDIRECT_URL));
 	}
 
 }

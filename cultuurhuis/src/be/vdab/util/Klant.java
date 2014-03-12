@@ -4,12 +4,38 @@ import java.util.List;
 
 public class Klant {
 	
+	private int nummer;
 	private String voornaam;
 	private String familienaam;
 	private String gebruikersnaam;
 	private String paswoord;
 	private Adres adres;
 	private List<Reservering> reserveringen;
+	
+	
+	public Klant(int nummer,String voornaam,String familienaam,String straat,String huisNr,int postcode,String gemeente,String gebruikersnaam,String paswoord){
+		this.nummer=nummer;
+		this.voornaam=voornaam;
+		this.familienaam=familienaam;
+		this.gebruikersnaam=gebruikersnaam;
+		this.paswoord=paswoord;
+		this.adres=new Adres(straat,huisNr,postcode,gemeente);
+	}
+	
+	@Override
+	public String toString(){
+		StringBuffer stringBuffer=new StringBuffer();
+		stringBuffer=stringBuffer.append(voornaam).append(" ").append(familienaam).append(" ").append(adres.getStraat()).append(" ").append(adres.getHuisNummer()).append(" ").append(adres.getPostcode());
+		stringBuffer=stringBuffer.append(" ").append(adres.getGemeente());
+		return stringBuffer.toString();
+	}
+	
+	public int getNummer() {
+		return nummer;
+	}
+	public void setNummer(int nummer) {
+		this.nummer = nummer;
+	}
 	public String getVoornaam() {
 		return voornaam;
 	}

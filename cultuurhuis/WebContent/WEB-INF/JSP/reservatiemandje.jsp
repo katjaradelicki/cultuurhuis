@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html"
     pageEncoding="UTF-8"%>
     <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@taglib prefix="vdab" uri="http://vdab.be/tags" %>
     <c:set value="${pageContext.servletContext.contextPath}" var="contextPath"/>
 <!DOCTYPE html >
 <html>
@@ -10,6 +11,7 @@
 </head>
 <body>
 <h1>Het Cultuurhuis: reservatiemandje <img alt="mandje.png" src="${contextPath}/images/mandje.png"/></h1>
+<vdab:menu/>
 <c:url value="/reservatiemandje" var="reservatiemandjeUrl"/>
 <form action="${reservatiemandjeUrl}" method="post">
 <table class="zebra">
