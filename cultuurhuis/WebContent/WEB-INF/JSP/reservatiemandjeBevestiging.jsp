@@ -24,7 +24,7 @@
 <input type="submit" value="Zoek me op" <c:if test="${not empty klant}">  disabled="disabled" </c:if> >
 </form>
 <c:url value="/nieuweKlant" var="nieuweKlantUrl"/>
-<form action="${nieuweKlantUrl}" method="get">
+<form action="${nieuweKlantUrl}" method="get"> <%-- alternatief: link opmaken met css als knop -->Nadeel:knop kan wijzigen in uitzicht maar de css-knop niet (tenzij je verschillende css voorziet) --%>
 <input type="submit" value="Ik ben nieuw"  <c:if test="${not empty klant}">  disabled="disabled" </c:if> >
 </form>
 </br>
@@ -32,8 +32,8 @@
 <c:if test="${not empty klant}">${klant.toString()}</c:if>
 <c:if test="${not empty fout}">${fout}</c:if>
 <h2>Stap 2:Bevestigen</h2>
-<c:url value="/overzicht" var="overzichtUrl"/>
-<form action="${overzichtUrl}" method="get">
+<c:url value="/reserveringen/toevoegen" var="toevoegenUrl"/>
+<form action="${toevoegenUrl}" method="post">
 <input type="submit" value="Bevestigen"  <c:if test="${empty klant}">  disabled="disabled" </c:if> > 
 </form>
 </body>

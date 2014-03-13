@@ -33,10 +33,8 @@ public class BevestigingReservatieServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		System.out.println("in doGet van BevestigingReservatieServlet");
+		
 		request.getSession().setAttribute("pagina", "Bevestiging reservatie");
-		System.out.println("pagina op de sessie gezet");
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 

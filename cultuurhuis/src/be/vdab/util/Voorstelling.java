@@ -15,6 +15,10 @@ public class Voorstelling {
 	private Genre genre;
 	private List<Uitvoerder> uitvoerders;
 	
+	public Voorstelling(int nummer){
+		this.nummer=nummer;
+	}
+	
 	public Voorstelling (int nummer, Timestamp datum, int aantalVrijePlaatsen, String naam, double prijs, Genre genre,List<Uitvoerder>uitvoerders){
 		this.nummer=nummer;
 		this.datum=datum;

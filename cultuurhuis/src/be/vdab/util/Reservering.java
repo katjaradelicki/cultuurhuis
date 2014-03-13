@@ -1,6 +1,6 @@
 package be.vdab.util;
 
-public class Reservering {
+public class Reservering implements Comparable<Reservering>{
 	
 	private int reserveringsNr;
 	private Voorstelling voorstelling;
@@ -36,5 +36,10 @@ public class Reservering {
 		this.isGelukt = isGelukt;
 	}
 	
-
+	
+	@Override
+	public int compareTo(Reservering o) {
+		
+		return this.getVoorstelling().getDatum().compareTo(o.getVoorstelling().getDatum());
+	}
 }

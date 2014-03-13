@@ -10,7 +10,7 @@
 <title>Het Cultuurhuis - Nieuwe klant</title>
 </head>
 <body>
-<h1>Het Cultuurhuis: nieuwe klant<img alt="nieuweklant.png" src="${contextPath}/images/nieuweklant.jpg"></h1>
+<h1>Het Cultuurhuis: nieuwe klant<img alt="nieuweklant.png" src="${contextPath}/images/nieuweklant.png"></h1>
 <vdab:menu/>
 <form action="" method="post">
 <dl>
@@ -35,5 +35,12 @@
 </dl>
 <input type="submit" value="OK">
 </form>
+<c:if test="${not empty fouten}">
+<ul>
+<c:forEach items="${fouten}" var="fout">
+<li>${fout}</li>
+</c:forEach>
+</ul>
+</c:if>
 </body>
 </html>
