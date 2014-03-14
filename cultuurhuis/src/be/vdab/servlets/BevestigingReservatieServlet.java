@@ -12,7 +12,7 @@ import be.vdab.dao.KlantDAO;
 import be.vdab.util.Klant;
 
 /**
- * Servlet implementation class BevestigingReservatieServlet
+ * Servlet waarin de klant zich kenbaar maakt. En waar de klant, als hij ingelogd is, zijn reservaties kan bevestigen.
  */
 @WebServlet("/reservatiemandje/bevestiging")
 public class BevestigingReservatieServlet extends HttpServlet {
@@ -21,28 +21,16 @@ public class BevestigingReservatieServlet extends HttpServlet {
 	private static final KlantDAO klantDAO=new KlantDAO();
 	private static final String REDIRECT_URL="/reservatiemandje/bevestiging";
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BevestigingReservatieServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.getSession().setAttribute("pagina", "Bevestiging reservatie");
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// (parameters gebruikersnaam en paswoord) Beter: klantnr op de sessie zetten
+		// (parameters gebruikersnaam en paswoord op sessie zetten) Beter: klantnr op de sessie zetten
 		String gebruikersnaam=request.getParameter("gebruikersnaam");
 		String paswoord=request.getParameter("paswoord");
 		Klant klant=klantDAO.findByUsernameAndPassword(gebruikersnaam, paswoord);
@@ -50,8 +38,9 @@ public class BevestigingReservatieServlet extends HttpServlet {
 			request.setAttribute("fout", "Verkeerde gebruikersnaam of paswoord");
 			request.getRequestDispatcher(VIEW).forward(request, response);
 		}else{//klantgegevens nodig in reservatiemandjeBevestiging.jsp -> op de request zetten heeft geen zin hier. 
-			  //Klant in een cookie of in de session bewaren. Enkel deze mogelijkheid? Enkel tekst in een cookie, geen objecten?
-			//request.getSession().setAttribute("klantNr", klant.getNummer());
+			  //Klant in een cookie of in de session bewaren. Enkel deze mogelijkheid? 
+			  //In een cookie kan je enkel een String bewaren en hier wil ik een object bewaren.
+			
 			request.getSession().setAttribute("klant", klant);
 			response.sendRedirect(response.encodeURL(request.getContextPath()+ REDIRECT_URL));
 		}

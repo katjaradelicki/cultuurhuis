@@ -15,6 +15,7 @@ public class Voorstelling {
 	private Genre genre;
 	private List<Uitvoerder> uitvoerders;
 	
+	
 	public Voorstelling(int nummer){
 		this.nummer=nummer;
 	}

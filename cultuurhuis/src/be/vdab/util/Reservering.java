@@ -1,6 +1,8 @@
 package be.vdab.util;
 
-public class Reservering implements Comparable<Reservering>{
+import java.util.Comparator;
+
+public class Reservering {
 	
 	private int reserveringsNr;
 	private Voorstelling voorstelling;
@@ -36,10 +38,29 @@ public class Reservering implements Comparable<Reservering>{
 		this.isGelukt = isGelukt;
 	}
 	
-	
-	@Override
-	public int compareTo(Reservering o) {
-		
-		return this.getVoorstelling().getDatum().compareTo(o.getVoorstelling().getDatum());
+	public static Comparator<Reservering> getDatumComparator(){
+		return new Comparator<Reservering>() {
+			
+			@Override
+			public int compare (Reservering r1, Reservering r2){
+				if(r1==null || r2==null ){
+					throw new NullPointerException();
+				}else{
+					if(r1.getVoorstelling().getNummer()== r2.getVoorstelling().getNummer()){
+						return 0;
+					}else {
+						if(r1.getVoorstelling().getDatum().compareTo(r2.getVoorstelling().getDatum())<=0){
+							return -1;
+						}
+						else{ return 1;}
+					
+						
+					}
+				}
+			}
+			
+		};
 	}
+	
+	
 }

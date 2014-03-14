@@ -22,7 +22,7 @@ public class VoorstellingDAO extends AbstractDAO {
 	private static final String FIND_BY_GENRE="select VoorstellingsNr,Titel, Uitvoerders,Datum, Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from genres, voorstellingen where genres.GenreNr=voorstellingen.GenreNr and genres.naam= ? order by Datum";
 	private static final String FIND_BY_PK="select VoorstellingsNr, Titel, Uitvoerders,Datum,Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from voorstellingen,genres where genres.GenreNr=voorstellingen.GenreNr and VoorstellingsNr=?";
 	
-	public LinkedList<Voorstelling> findByGenre(String genreNaam){
+	public ArrayList<Voorstelling> findByGenre(String genreNaam){
 		try(Connection connection=getConnection();
 				PreparedStatement statement=connection.prepareStatement(FIND_BY_GENRE);
 				
@@ -30,7 +30,7 @@ public class VoorstellingDAO extends AbstractDAO {
 			statement.setString(1, genreNaam);
 			try(
 				ResultSet resultset=statement.executeQuery();){
-				LinkedList<Voorstelling> voorstellingen=new LinkedList<>();
+				ArrayList<Voorstelling> voorstellingen=new ArrayList<>();
 				while(resultset.next()){
 					Voorstelling voorstelling=resultSetFindByGenreRijNaarVoorstelling(resultset);
 					voorstellingen.add(voorstelling);

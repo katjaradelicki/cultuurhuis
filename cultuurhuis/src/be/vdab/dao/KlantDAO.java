@@ -35,10 +35,13 @@ public class KlantDAO extends AbstractDAO{
 		Klant klant=new Klant(resultset.getInt("KlantNr"),resultset.getString("Voornaam"),resultset.getString("Familienaam"),resultset.getString("Straat"),resultset.getString("HuisNr"),resultset.getInt("Postcode"),resultset.getString("Gemeente"),resultset.getString("GebruikersNaam"),resultset.getString("Paswoord"));
 	    return klant;
 	}
-	
+	/*
+	 * @return klantnummer van de geïnserte klant
+	 */
 	public int insert(String voornaam,String familienaam,String straat, String huisNr,int postcode,String gemeente,String gebruikersNaam,String paswoord){
-		//return: klantnummer van de geïnserte klant
-		//als gebruikersnaam er al inzit krijg je Exception bij het inserten (dus niet eerst kijken of gebruikersnaam er al inzit)-->toch wel: je moet een foutmelding geven als gebruiker al bestaat (niet bij elke SQLException)
+		
+		//als gebruikersnaam er al inzit krijg je Exception bij het inserten (dus niet eerst kijken of gebruikersnaam er al inzit)
+		//-->toch wel: je moet een foutmelding geven als gebruiker al bestaat (en niet bij elke SQLException)
 		try(Connection connection=getConnection();
 				PreparedStatement statement=connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);){
 			statement.setString(1, voornaam);

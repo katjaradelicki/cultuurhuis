@@ -1,6 +1,7 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,8 @@ import be.vdab.dao.KlantDAO;
 import be.vdab.util.Klant;
 
 /**
- * Servlet implementation class NieuweKlantServlet
+ * Servlet die de verwerking doet van het aanmaken van een nieuwe klant op de databank. 
+ * En de klant kenbaar maken door hem op de sessie te zetten.
  */
 @WebServlet("/nieuweKlant")
 public class NieuweKlantServlet extends HttpServlet {
@@ -23,17 +25,7 @@ public class NieuweKlantServlet extends HttpServlet {
 	private static final KlantDAO klandtDAO=new KlantDAO();
 	private static final String REDIRECT_URL="/reservatiemandje/bevestiging";
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public NieuweKlantServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().setAttribute("pagina", "Nieuwe klant");
 		request.getRequestDispatcher(VIEW).forward(request, response);
@@ -43,7 +35,7 @@ public class NieuweKlantServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List <String> fouten=new LinkedList<>();
+		List <String> fouten=new ArrayList<>();
 		//kan dit korter geschreven worden? Of elke parameter afgaan, zoals hier?
 		String voornaam=request.getParameter("voornaam");
 		if(voornaam.length()==0){
