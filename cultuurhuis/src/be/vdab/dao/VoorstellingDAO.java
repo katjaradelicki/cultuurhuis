@@ -19,7 +19,7 @@ import be.vdab.util.Uitvoerder;
 import be.vdab.util.Voorstelling;
 
 public class VoorstellingDAO extends AbstractDAO {
-	private static final String FIND_BY_GENRE="select VoorstellingsNr,Titel, Uitvoerders,Datum, Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from genres, voorstellingen where genres.GenreNr=voorstellingen.GenreNr and genres.naam= ? order by Datum";
+	private static final String FIND_BY_GENRE="select VoorstellingsNr,Titel, Uitvoerders,Datum, Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from genres, voorstellingen where genres.GenreNr=voorstellingen.GenreNr and genres.naam= ? and Datum >=CURDATE() order by Datum";
 	private static final String FIND_BY_PK="select VoorstellingsNr, Titel, Uitvoerders,Datum,Prijs, VrijePlaatsen,genres.GenreNr as genreNummer, genres.Naam as genreNaam from voorstellingen,genres where genres.GenreNr=voorstellingen.GenreNr and VoorstellingsNr=?";
 	
 	public ArrayList<Voorstelling> findByGenre(String genreNaam){

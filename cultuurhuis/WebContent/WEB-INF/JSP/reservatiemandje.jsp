@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="vdab" uri="http://vdab.be/tags"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set value="${pageContext.servletContext.contextPath}"
 	var="contextPath" />
 <!DOCTYPE html >
@@ -32,8 +33,7 @@
 				<c:forEach items="${reservatieMandjeVolledig.reserveringen}"
 					var="reservering">
 					<tr>
-						<td><fmt:formatDate value="${reservering.voorstelling.datum}"
-							dateStyle="short" timeStyle="short" type="both" pattern="dd/MM/yyyy HH:mm" /></td>
+						<td><fmt:formatDate value="${reservering.voorstelling.datum}" dateStyle="short" timeStyle="short" type="both" pattern="dd/MM/yyyy HH:mm" /></td>
 						<td>${reservering.voorstelling.titel}</td>
 						<td><c:forEach
 								items="${reservering.voorstelling.uitvoerders}" var="uitvoerder"

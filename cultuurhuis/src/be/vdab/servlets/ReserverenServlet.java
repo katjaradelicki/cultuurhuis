@@ -43,27 +43,29 @@ public class ReserverenServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		int voorstellingsNummer=Integer.parseInt(request.getParameter("voorstelling"));
 		Voorstelling voorstelling=voorstellingDAO.findByPK(voorstellingsNummer);
-		
+		request.setAttribute("voorstelling", voorstelling);//request attribuut nodig als je een fout hebt
 		try{
-		 int aantalTeReserveren=Integer.parseInt( request.getParameter("aantalTeReserveren"));
-		 if (aantalTeReserveren>=1 && aantalTeReserveren<=voorstelling.getAantalVrijePlaatsen()){
-			 //reservering toevoegen aan winkelmandje
-			 @SuppressWarnings("unchecked")
-			 LinkedHashMap<Long,Integer> reservatiemandje= (LinkedHashMap<Long,Integer>)( request.getSession().getAttribute("reservatiemandje"));
-			 if(reservatiemandje==null){
-				 reservatiemandje=new LinkedHashMap<Long, Integer>(); //LinkedHashMap nodig ipv gewone hashmap want de insertion-order moet behouden blijven
-			 }
+		
+		int aantalTeReserveren=Integer.parseInt( request.getParameter("aantalTeReserveren"));
+		if (aantalTeReserveren>=1 && aantalTeReserveren<=voorstelling.getAantalVrijePlaatsen()){
+				 //reservering toevoegen aan winkelmandje
+				 @SuppressWarnings("unchecked")
+				 LinkedHashMap<Long,Integer> reservatiemandje= (LinkedHashMap<Long,Integer>)( request.getSession().getAttribute("reservatiemandje"));
+				 if(reservatiemandje==null){
+					 reservatiemandje=new LinkedHashMap<Long, Integer>(); //LinkedHashMap nodig ipv gewone hashmap want de insertion-order moet behouden blijven
+				 }
 			 reservatiemandje.put(new Long(voorstelling.getNummer()), aantalTeReserveren); 
 			 request.getSession().setAttribute("reservatiemandje", reservatiemandje);
 			 response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+REDIRECT_URL));
 		 }else{
-			 request.setAttribute("fout", "Tike een getal tussen 1 en "+voorstelling.getAantalVrijePlaatsen());
+			 request.setAttribute("fout", "Tik een getal tussen 1 en "+voorstelling.getAantalVrijePlaatsen());
 			 request.getRequestDispatcher(VIEW).forward(request, response);
 		 }
 		}catch(NumberFormatException nfe){
-			request.setAttribute("fout", "Tike een getal tussen 1 en "+voorstelling.getAantalVrijePlaatsen());
+			request.setAttribute("fout", "Tik een getal tussen 1 en "+voorstelling.getAantalVrijePlaatsen());
 			request.getRequestDispatcher(VIEW).forward(request, response);
 		}
 		
